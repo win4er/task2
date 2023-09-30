@@ -35,12 +35,10 @@ void ParseText::openFile(const std::string& fileName) {
 }
 
 void ParseText::parseFile() {
-    if (currentWord < words.size()) {
-        lastWord = (currentWord == (words.size() - 1));
-        currentWord++;
-    }
-    else {
-        lastWord = true;
+    std::ifstream file(fileName);
+    std::string word;
+    for (file >> word; i != file.eof(); file >> word) {
+	words.push_back(word);
     }
 }
 
