@@ -1,29 +1,41 @@
-// parse_text.cpp
-
 #include "parse_text.h"
 
+int ParseText::currentWord = 0;
 
 ParseText::ParseText(const std::string& fileName) {
-    openFile(fileName);
-    lastWord = words.empty();
-    int ParseText::currentWord = 0;
+    filePuring(fileName, fileName + ".tmp");
+    file = std::ifstream(fileName + ".tmp");
+    parseFile();
 }
 
-ParseText::ParseText(const std::string& fileName, unsigned long long maxWords) {
+ParseText::ParseText(const std::string& fileName, unsigned long long int maxWords) {
     openFile(fileName);
-    for (unsigned long long i = 0; i < maxWords; ++i) {
-        if (!lastWord) {
-            parseFile();
-        }
-	else {
-            break;
-        }
+    parseFile();
+    if (maxWords < words.size()) {
+        auto it = words.begin();
+        std::advance(it, maxWords);
+        words.erase(it, words.end());
     }
-    lastWord = words.empty();
 }
 
 ParseText::~ParseText() {
     closeFile();
+}
+
+void ParseText::filePuring(const std::string& inputFileName, const std::string& outputFileName) const {
+    std::ifstream inputFile(inputFileName);
+    std::ofstream outputFile(outputFileName);
+    char c;
+    while(inputFile.get(c)) {   
+        if (std::ispunct(c) || std::isdigit(c)) {
+            outputFile.put(' ');
+        }
+        else {
+            outputFile.put(c);
+        }
+    }
+    inputFile.close();
+    outputFile.close();
 }
 
 void ParseText::openFile(const std::string& fileName) {
@@ -31,14 +43,15 @@ void ParseText::openFile(const std::string& fileName) {
     if (!inputFile.is_open()) {
         throw std::runtime_error("Failed to open file: " + fileName);
     }
-    lastWord = words.empty();
 }
 
 void ParseText::parseFile() {
-    std::ifstream file(fileName);
+    if (!file.is_open()) {
+        throw std::runtime_error("couldn't open file");
+    }
     std::string word;
-    for (file >> word; i != file.eof(); file >> word) {
-	words.push_back(word);
+    while (file >> word) {
+        words.push_back(word);
     }
 }
 
@@ -49,29 +62,27 @@ void ParseText::closeFile() {
 
 const std::string& ParseText::getFirstWord() const {
     currentWord = 0;
-    if (!words.empty()) {
-        return words.front();
+    if (words.empty()) {
+        throw std::runtime_error("no words in the list");
     }
-    else {
-        static std::string emptyString;
-        return emptyString;
-    }
+    return words.front();
 }
-const std::pair<std::string, bool>& ParseText::getNextWord() const {
+
+std::pair<std::string, bool> ParseText::getNextWord() const {
     std::string first;
-    int second;
+    bool second;
     if (currentWord != (words.size() - 1)) {
-	auto item = words.begin();
-	std::advance(item, currentWord + 1);
-	first = *item;
+        auto item = words.begin();
+        std::advance(item, currentWord + 1);
+        first = *item;
         second = (currentWord == (words.size() - 1));
-	currentWord += 1;
+        currentWord += 1;
     }
     else {
-	first = "";
+        first = "";
         second = true;
     }
-    const std::pair<std::string, int> result = {first, second};
+    std::pair<std::string, int> result = {first, second};
     return result;
 }
 
@@ -83,7 +94,6 @@ const std::string& ParseText::getWordAt(int index) const {
         return *it;
     }
     else {
-        return emptyString;
+        throw std::out_of_range("index out of range");
     }
 }
-
