@@ -5,10 +5,12 @@
 #include <string>
 #include <utility>
 #include <fstream>
+#include <regex>
 
 class ParseText {
     private:
-	std::string fileName;
+        std::ifstream file;
+        std::string fileName;
         std::list<std::string> words;
         static int currentWord;
         bool lastWord;
@@ -18,15 +20,15 @@ class ParseText {
         void closeFile();
 
     public:
-	ParseText() = delete;
+        ParseText() = delete;
         ParseText(const std::string& fileName);
-        ParseText(const std::string& fileName, unsigned long long maxWords);
+        ParseText(const std::string& fileName, unsigned long long int maxWords);
         ~ParseText();
 
-	const std::string& getFirstWord() const;
-    	const std::pair<std::string, bool>& getNextWord() const;
-	const std::string& getWordAt(int index) const; //начиная с 0
+        const std::string& getFirstWord() const;
+        std::pair<std::string, bool> getNextWord() const;
+        const std::string& getWordAt(int index) const; //начиная с 0
+        void filePuring(const std::string& inputFileName, const std::string& ouputFileName) const;
 };
 
 #endif // _parse_text_h_
-
