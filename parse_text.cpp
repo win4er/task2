@@ -94,6 +94,6 @@ const std::string& ParseText::getWordAt(int index) const {
         return *it;
     }
     else {
-        throw std::out_of_range("index out of range");
+        return "";
     }
 }
