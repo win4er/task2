@@ -19,6 +19,7 @@ class CountWords {
         std::string file;
         std::map<std::string, int> countWords;
     public:
+        CountWords();
         CountWords(std::string file);
         ~CountWords();
         int getCountWord(const std::string& word) const;
