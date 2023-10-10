@@ -87,13 +87,13 @@ std::pair<std::string, bool> ParseText::getNextWord() const {
 }
 
 const std::string ParseText::getWordAt(int index) const {
-    static std::string emptyString;
+    static std::string emptyString = "";
     if (index >= 0 and index < words.size()) {
         auto it = words.begin();
         std::advance(it, index);
         return *it;
     }
     else {
-        return "";
+        return emptyString;
     }
 }
