@@ -23,7 +23,7 @@ CountWords::CountWords(std::string file_name) {
         throw std::runtime_error("couldn't open file: " + file);
     }
     else {
-        File.close;
+        File.close();
     }
 }
 
