@@ -16,6 +16,14 @@ void Sort(std::map<std::string, int>& M) {
 CountWords::CountWords(std::string file_name) {
     file = file_name;
     std::map<std::string, int> countWords;
+    std::ifstream File;
+    File.open(file);
+    if (!File.is_open()) {
+        throw std::runtime_error("couldn't open file: " + file);
+    }
+    else {
+        File.close;
+    }
 }
 
 CountWords::~CountWords() {
