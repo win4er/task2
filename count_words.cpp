@@ -12,6 +12,7 @@ void Sort(std::map<std::string, int>& M) {
     sort(A.begin(), A.end(), cmp);
 }
 
+CountWords::CountWords() {}
 
 CountWords::CountWords(std::string file_name) {
     file = file_name;
