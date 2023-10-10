@@ -86,7 +86,7 @@ std::pair<std::string, bool> ParseText::getNextWord() const {
     return result;
 }
 
-const std::string& ParseText::getWordAt(int index) const {
+const std::string ParseText::getWordAt(int index) const {
     static std::string emptyString;
     if (index >= 0 and index < words.size()) {
         auto it = words.begin();
