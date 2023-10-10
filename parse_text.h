@@ -27,7 +27,7 @@ class ParseText {
 
         const std::string& getFirstWord() const;
         std::pair<std::string, bool> getNextWord() const;
-        const std::string& getWordAt(int index) const; //начиная с 0
+        const std::string getWordAt(int index) const; //начиная с 0
         void filePuring(const std::string& inputFileName, const std::string& ouputFileName) const;
 };
 
