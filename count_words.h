@@ -16,7 +16,6 @@ void Sort(std::map<std::string, int>& M);
 class CountWords {
     private:
     //здесь можно объявлять любые необходимые переменные
-        std::string file;
         std::map<std::string, int> countWords;
     public:
         CountWords();
