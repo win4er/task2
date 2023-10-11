@@ -19,7 +19,7 @@ class CountWords {
         std::string file;
         std::map<std::string, int> countWords;
     public:
-        CountWords(std::string file);
+        CountWords();
         ~CountWords();
         int getCountWord(const std::string& word) const;
         int addWord(const std::string& word); //возвращает число слов, встретившихся в тексте
