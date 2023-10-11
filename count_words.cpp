@@ -1,68 +1,36 @@
 #include "count_words.h"
 
-bool cmp(std::pair<std::string, int>& a, std::pair<std::string, int>& b) {
-    return a.second < b.second;
-}
- 
-void Sort(std::map<std::string, int>& M) {
-    std::vector<std::pair<std::string, int>> A; 
-    for (auto& it : M) {
-        A.push_back(it);
-    }
-    sort(A.begin(), A.end(), cmp);
-}
-
-
-CountWords::CountWords(std::string file_name) {
-    file = file_name;
-    std::map<std::string, int> countWords;
-}
+CountWords::CountWords() {}
 
 CountWords::~CountWords() {
     countWords.clear();
-    std::ifstream tfile(file);
-    tfile.close();
 }
 
 int CountWords::getCountWord(const std::string& word) const {
-    std::ifstream tfile(file);
-    int count_words = 0;
-    std::string tword;
-    if (tfile.is_open()) {
-        for (tfile >> tword; !tfile.eof(); tfile >> tword) {
-            if (word == tword) {
-                count_words += 1;
-            }
-        }
+    if (countWords.find(word) != countWords.end()) {
+        return countWords.find(word)->second;
     }
     else {
-        std::cout << "[ERROR] File is not opened" << std::endl;
+        return 0;
     }
-    return count_words;
 }
 
 int CountWords::addWord(const std::string& word) {
-    std::ifstream tfile(file);
-    int count_words = 0;
-    std::string tword;
-    if (tfile.is_open()) {
-        for (tfile >> tword; !tfile.eof(); tfile >> tword) {
-            if (word == tword) {
-                count_words += 1;
-            }
-        }
-        countWords[word] = count_words;
+    if (word == "") {
+        return 0;
     }
     else {
-        std::cout << "[ERROR] File is not opened" << std::endl;
+        return ++countWords[word];
     }
-    Sort(countWords);
-    return count_words;
 }
 
 std::list<std::pair<std::string, int>> CountWords::getMaxCountWord() const {
     int limit = 10;
     std::list<std::pair<std::string, int>> result;
+    std::vector<std::pair<std::string, int>> allWords(countWords.begin(), countWords.end());
+    std::sort(allWords.begin(), allWords.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+		return a.second > b.second;
+	});
     for (auto item = countWords.begin(); item != countWords.end(); item++) {
         if (limit != 0) {
             result.push_back(std::pair(item->first, item->second));
@@ -78,6 +46,10 @@ std::list<std::pair<std::string, int>> CountWords::getMaxCountWord() const {
 std::list<std::pair<std::string, int>> CountWords::getMinCountWord() const {
     int limit = 10;
     std::list<std::pair<std::string, int>> result;
+    std::vector<std::pair<std::string, int>> allWords(countWords.begin(), countWords.end());
+    std::sort(allWords.begin(), allWords.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+		return a.second > b.second;
+	});
     for (auto item = countWords.end(); item != countWords.begin(); item--) {
         if (limit != 0) {
             result.push_back(std::pair(item->first, item->second));
