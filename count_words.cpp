@@ -31,7 +31,7 @@ std::list<std::pair<std::string, int>> CountWords::getMaxCountWord() const {
     std::sort(allWords.begin(), allWords.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
 		return a.second > b.second;
 	});
-    for (auto item = countWords.begin(); item != countWords.end(); item++) {
+    for (auto item = allWords.begin(); item != allWords.end(); item++) {
         if (limit != 0) {
             result.push_back(std::pair(item->first, item->second));
             limit -= 1;
@@ -50,7 +50,7 @@ std::list<std::pair<std::string, int>> CountWords::getMinCountWord() const {
     std::sort(allWords.begin(), allWords.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
 		return a.second > b.second;
 	});
-    for (auto item = countWords.end(); item != countWords.begin(); item--) {
+    for (auto item = allWords.end(); item != allWords.begin(); item--) {
         if (limit != 0) {
             result.push_back(std::pair(item->first, item->second));
             limit -= 1;
