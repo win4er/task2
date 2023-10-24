@@ -14,7 +14,7 @@ int Rational::gcd(int a, int b){
 
 Rational::Rational(){
     numerator_ = 0;
-	  denominator_ = 1;
+	denominator_ = 1;
 }
 
 Rational::Rational(int numerator){
@@ -35,10 +35,10 @@ Rational Rational::Add(const Rational& a, const Rational& b){
     return Rational(numer, denomer);
 }
 
-int Rational::numerator() {
+int Rational::numerator() const {
     return numerator_;
 }
 
-int Rational::denominator() {
+int Rational::denominator() const {
     return denominator_;
 }
