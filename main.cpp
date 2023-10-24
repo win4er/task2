@@ -1,5 +1,6 @@
 #include <iostream>
 #include "task1.cpp"
+#include "task2.h"
 
 int main(){
     // Раньне cat_ создавался в момент Cat cat_ за счёт конструктора по умолчанию, который delete, но
